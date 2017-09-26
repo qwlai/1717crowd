@@ -14,15 +14,18 @@ li {listt-style: none;}
 <li>Name:</li><li><input type="text" name="name" /></li>
 <li>Password:</li><li><input type="text" name="pass" /></li>
 <li>Verify Password:</li><li><input type="text" name="vpass" /></li>
-<li><input type="submit" /></li>
+<li><input name="submit" type="submit" /></li>
 </form>
 </ul>
 </body>
 </html>
 <?php
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
-$query = "SELECT add_user('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
-//$query = "INSERT INTO account VALUES ('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
-$result = pg_query($query); 
-echo $result;
+if(isset($_POST['submit'])) {
+	$query = "SELECT add_user('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
+	//$query = "INSERT INTO account VALUES ('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
+	$result = pg_query($query); 
+	$row = pg_fetch_array($result);
+	echo $row[0];
+}
 ?>
