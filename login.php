@@ -1,8 +1,15 @@
 <?php  
 
 session_start();
-    
+
+if(isset($_SESSION['user']))   // Checking whether the session is already there or not if 
+                              // true then header redirect it to the home page directly 
+ {
+    header("Location: ./index.php"); 
+ }
+
 $error="";
+
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
 if (isset($_POST['submit'])){
@@ -14,6 +21,7 @@ if (isset($_POST['submit'])){
     echo $row[0];
 
     if(pg_num_rows($result) != 0) {
+        $_SESSION['user']=$email;
         header("Location: ./index.php");    
     }else{
         $error = "Username or Password is invalid!";
@@ -36,21 +44,24 @@ if (isset($_POST['submit'])){
 </head>
 
 <body>
-    <div class="login-dark">        
-    <form method="post">
-        <h2 class="sr-only">Login Form</h2>
-        <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email" />
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password" />
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit" name="submit">Log In</button>
-        </div>
-         <div class="error-message"><?php if(isset($error)) { echo $error; } ?></div>
 
+    <div class="login-dark">    
+    <?php include 'header.php' ?>    
+    <div class="login">
+        <form method="post">
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email" />
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password" />
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit" name="submit">Log In</button>
+            </div>
+             <div class="error-message"><?php if(isset($error)) { echo $error; } ?></div>
+    </div>
 </form>
 </div>
     <script src="assets/js/jquery.min.js"></script>

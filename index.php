@@ -1,3 +1,2 @@
-<?php  
-echo 'hello';
-?>
+<?php   session_start();  ?>
+<?php include 'header.php' ?>   
