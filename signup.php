@@ -21,6 +21,11 @@ li {listt-style: none;}
 </html>
 <?php
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
-$query = "INSERT INTO account VALUES ('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
-$result = pg_query($query); 
+$query = "SELECT add_user ('$_POST[email]','$_POST[name]', crypt('$_POST[pass]', gen_salt('bf', 8)))";
+$result = pg_query($query);
+
+$row = $pg_fetch_assoc($result);
+echo $row;
+
+echo "hello";
 ?>
