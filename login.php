@@ -8,9 +8,8 @@ $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgre
 if (isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM account WHERE email= '$email' and password= '$password'";
     
-    $result = pg_query_params($query); 
+    $result = pg_query_params($db, 'SELECT * FROM account WHERE email= $1 and password= $2', array("$email", "$password")); 
     $row = pg_fetch_array($result);
     echo $row[0];
 
