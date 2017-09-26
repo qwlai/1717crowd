@@ -53,8 +53,6 @@ if (isset($_POST['submit'])){
          <div class="error-message"><?php if(isset($error)) { echo $error; } ?></div>
 
 </form>
-
-        <!--<a href="#" class="forgot">Forgot your email or password?</a> -->
 </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
