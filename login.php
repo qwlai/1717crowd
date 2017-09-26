@@ -43,30 +43,7 @@ span.psw {
 </style>
 <body>
 
-<?php  //Start the Session
-$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
-$result = pg_query($query); 
 
-session_start();
-
-if (isset($_POST['username']) and isset($_POST['password'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $query = "SELECT * FROM 'user' WHERE userID='$username' and password='$password'";
-    $result = pg_query($query);
-
-    if ($result == true){
-        $_SESSION['username'] = $username;
-    }else{
-        echo "Invalid Login Credentials.";
-    }
-}
-
-if (isset($_SESSION['username'])){
-    $username = $_SESSION['username'];
-    echo "Hello " . $username;
-
-?>
 
 <h2>Login</h2>
 
@@ -89,3 +66,18 @@ if (isset($_SESSION['username'])){
 
 </body>
 </html>
+
+<?php  //Start the Session
+$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
+$result = pg_query($query); 
+
+
+if (isset($_POST['username']) and isset($_POST['password'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $query = "SELECT * FROM 'account' WHERE email='$username' and password='$password'";
+	//$query = "SELECT * FROM 'account' WHERE email='$username' and password=crypt('$password', gen_salt('bf', 8))";
+    $result = pg_query($query);
+}
+
+?>
