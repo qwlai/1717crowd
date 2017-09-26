@@ -10,7 +10,7 @@ if (isset($_POST['submit'])){
     $password = $_POST['password'];
     $query = "SELECT * FROM account WHERE email= '$email' and password= '$password'";
     
-    $result = pg_query($query); 
+    $result = pg_query_params($query); 
     $row = pg_fetch_array($result);
     echo $row[0];
 
