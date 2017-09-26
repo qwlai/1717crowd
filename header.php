@@ -1,4 +1,4 @@
-<?php   session_start(); ?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@
                         <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                     </div>
                     <div class="collapse navbar-collapse" id="navcol-1">
-                        <form class="navbar-form navbar-left" target="_self">
+                        <form class="navbar-form navbar-left" target="_self" method="post" action="search.php">
                             <div class="form-group">
                                 <label class="control-label" for="search-field"><i class="glyphicon glyphicon-search"></i></label>
                                 <input class="form-control search-field" type="search" name="search" placeholder="Search Project" id="search-field">
