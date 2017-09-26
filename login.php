@@ -48,7 +48,7 @@ $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgre
 $result = pg_query($query); 
 
 session_start();
-require('signup.php');
+
 if (isset($_POST['username']) and isset($_POST['password'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
