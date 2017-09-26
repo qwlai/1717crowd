@@ -56,9 +56,9 @@ span.psw {
 	<br>
     <label><b>Password</b></label>
 	<br>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" placeholder="Enter Password" name="pass" required>
     <br>    
-    <button type="submit" formmethod = "POST" formaction="./index.php">Login</button>
+    <button type="submit" formmethod = "POST" name = "submit">Login</button>
 	<a class="btn" href="./signup.php">Register </a>
   </div>
 
@@ -68,16 +68,23 @@ span.psw {
 </html>
 
 <?php  //Start the Session
+$error ="";
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
-$result = pg_query($query); 
 
 
-if (isset($_POST['username']) and isset($_POST['password'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $query = "SELECT * FROM 'account' WHERE email='$username' and password='$password'";
-	//$query = "SELECT * FROM 'account' WHERE email='$username' and password=crypt('$password', gen_salt('bf', 8))";
-    $result = pg_query($query);
+if (isset($_POST['submit'])){
+    $username = $_POST['uname'];
+    $password = $_POST['pass'];
+    //$query = "SELECT * FROM 'account' WHERE email='$username' and password='$password'";
+	$query = "SELECT * FROM account WHERE email= '$username' and password='$password'";
+	
+	$result = pg_query($db, $query);
+	
+	if(pg_num_rows($result) != 0) {
+		header('Location: ./index.php');    
+	}else{
+		echo "Wrong Username or Password!";
+	}
+		
 }
-
 ?>
