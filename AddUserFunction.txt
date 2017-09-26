@@ -1,0 +1,15 @@
+create function add_user(_email varchar, _name varchar, _password varchar)
+returns varchar as
+$BODY$
+DECLARE
+	result varchar;
+BEGIN
+IF EXISTS (SELECT email FROM account WHERE email = _email) THEN
+	return _email||' already exists!';
+END IF;
+insert into account(email, name, password) values (_email, _name, _password);
+select _email INTO result;
+return result||' has been added to the database!';
+END;
+$BODY$
+language 'plpgsql' volatile;
