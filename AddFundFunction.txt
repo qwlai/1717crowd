@@ -1,0 +1,12 @@
+create function add_fund(_investor varchar, _project_id integer, _amount numeric)
+returns varchar as
+$BODY$
+BEGIN
+IF EXISTS (SELECT project_id FROM project WHERE project_id = _project_id) THEN
+INSERT INTO fund(investor, project_id, amount) VALUES (_investor, _project_id, _amount);
+return 'Success!';
+END IF;
+return 'Project does not exist!';
+END;
+$BODY$
+language 'plpgsql' volatile;
