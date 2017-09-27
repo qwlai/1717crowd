@@ -76,7 +76,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 						
 						<td>
 							<form action="/update_project.php" method="post">
-								<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit">Update</button>
+								<?php echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$project_id.'">Update</button>' ?>
 							</form>
 						</td>
 					</tr>	
