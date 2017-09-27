@@ -21,6 +21,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 
 <body>
     <div class="container">
+        <h2>Search Results for <?php echo '"'.$search_field.'"'; ?></h2>
         <div class="table-responsive">
             <table class="table" style="width:100%">
                 <thead>
