@@ -22,17 +22,17 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 <body>
     <div class="container">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" style="width:100%">
                 <thead>
                     <tr>
                     	<th style="display:none;">ProjectID</th>
-                        <th>Owner </th>
-                        <th>Title </th>
-                        <th>Description </th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Keywords</th>
-                        <th>Progress</th>
+                        <th style="width:10%">Owner </th>
+                        <th style="width:10%">Title </th>
+                        <th style="width:30%">Description </th>
+                        <th style="width:8%">Start Date</th>
+                        <th style="width:8%">End Date</th>
+                        <th style="width:15%">Keywords</th>
+                        <th style="width:10%">Progress</th>
 						<?php if(isset($_SESSION['user']))  {
 							echo '<th>Add Fund</th>';
 						}?>
