@@ -23,7 +23,7 @@ if (isset($_POST['submit'])){
 	    $email = $_POST['email'];
 	    $name = $_POST['name'];
 
-	    $result = pg_query_params($db, 'SELECT add_user($1, $2, $3)', array("$email", "$name", "$password")); 
+	    $result = pg_query_params($db, 'SELECT add_user($1, $2, $3)', array($email, $name, $password)); 
 	    $row = pg_fetch_array($result);
 	    $message = $row[0];
 	}

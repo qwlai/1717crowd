@@ -1,0 +1,14 @@
+create function update_project(_project_id int, _title varchar, _description text, _end date, _keywords varchar, _amount numeric)
+returns int as
+$BODY$
+DECLARE
+  affected integer;
+  BEGIN
+  UPDATE project SET title=_title, description=_description, end_date=_end, keywords=_keywords, amount_sought=_amount where project_id=_project_id;
+  GET DIAGNOSTICS affected = ROW_COUNT;
+  return affected;
+  END;
+  $BODY$
+  language 'plpgsql' volatile;
+
+

@@ -53,6 +53,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 									<?php  	$progress = pg_query_params($db, 'SELECT calculate_fund($1)', array($project_id));
 								   	$amount = pg_fetch_array($progress);
 								   	$amount_sought = $row['amount_sought'];
+                    
 								   	$percentage = round($amount[0]/$amount_sought*100,2);
 								   	
 								   	

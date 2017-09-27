@@ -14,14 +14,14 @@ CREATE TABLE project (
 	start_date DATE NOT NULL,
 	end_date DATE check(end_date > start_date) NOT NULL,
 	keywords VARCHAR (255),
-	amount_sought NUMERIC NOT NULL check(amount_sought) > 0
+	amount_sought NUMERIC check(amount_sought > 0) NOT NULL
 );
 
 CREATE TABLE fund (
 	fund_id serial PRIMARY KEY,
 	investor VARCHAR (255) REFERENCES account (email),
-	projectid serial REFERENCES project (project_id),
-	amount NUMERIC NOT NULL check(amount) > 0
+	project_id serial REFERENCES project (project_id),
+	amount NUMERIC check(amount > 0) NOT NULL
 );
 
 

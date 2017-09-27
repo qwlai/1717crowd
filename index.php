@@ -8,7 +8,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 
 	$user = $_SESSION['user'];
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where advertiser = $1', array("$user"));
+	$result = pg_query_params($db, 'SELECT * FROM projectview where advertiser = $1', array($user));
 
 ?>
 <html>
