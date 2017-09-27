@@ -21,7 +21,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 
 <body>
     <div class="container">
-        <div class="table-responsive" style=>
+        <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
