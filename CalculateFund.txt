@@ -1,0 +1,15 @@
+create function calculate_fund(_project_id int) 
+return int as
+
+$BODY$
+DECLARE result int;
+
+BEGIN
+IF EXISTS (SELECT amount FROM fund WHERE project_id = _project_id) THEN
+select sum(amount) from fund where project_id = _project_id group by project_id into result;
+return result;
+END IF;
+return 0;
+END;
+$BODY$
+language 'plpgsql' volatile;
