@@ -33,6 +33,9 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
                         <th>End Date</th>
                         <th>Keywords</th>
                         <th>Progress</th>
+						<?php if(isset($_SESSION['user']))  {
+							echo '<th>Add Fund</th>';
+						}?>
                     </tr>
                 </thead>
 					<?php while ($row = pg_fetch_array($result)) { ?> 
@@ -66,6 +69,13 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
   								</div>
 							</div>	
 						</td>
+						<?php if(isset($_SESSION['user']))  {
+							echo '<td>';
+								echo '<form action="/demo/add_fund.php" method="post">';
+									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit">Fund</button>';
+								echo '</form>';
+							echo '</td>';
+						}?>
 						<?php } ?>
 					</tr>	
             </table>
