@@ -63,7 +63,6 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
   										echo '</div>';
 
 								   		} ?>
-  								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:70%">
   								</div>
 							</div>	
 						</td>

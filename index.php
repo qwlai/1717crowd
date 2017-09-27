@@ -39,6 +39,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
                         <th>Update Project</th>
                     </tr>
                 </thead>
+                
 					<?php while ($row = pg_fetch_array($result)) { 
 					?> 
 					<tr>
@@ -57,28 +58,29 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 								   	$amount_sought = $row['amount_sought'];
 
 								   	$percentage = round($amount[0]/$amount_sought*100,2);
-								   	
-								   	if ($percentage > 100) { ?>
+
+								   	if ($percentage >= 100) { ?>
   										<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
   										<?php echo $amount[0]."/".$amount_sought; ?>
   										</div>
-								   	<?php } else { 
+								   	<?php } else {
+								  		
 								   		echo '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">';
-  										echo $amount[0]."/".$amount_sought;
+								   		  	echo $amount[0]."/".$amount_sought;
   										echo '</div>';
 
 								   		} ?>
-  								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:70%">
   								</div>
 							</div>	
 						</td>
-						<?php } ?>
+						
 						<td>
 							<form action="/update_project.php" method="post">
 								<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit">Update</button>
 							</form>
 						</td>
 					</tr>	
+					<?php } ?>
             </table>
         </div>
     </div>
