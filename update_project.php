@@ -5,8 +5,6 @@
 if(isset($_SESSION['user']))  { // Checking whether the session is already there or not 
 	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
-	$oldtitle = "";
-
 	if (isset($_POST['submit'])) {
 		$oldtitle = $_POST['submit'];
 	}
@@ -19,16 +17,20 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		$end = $_POST['end'];
 		$keywords = $_POST['keywords'];
 		$amount = $_POST['amount'];
+		
 		$result = pg_query_params($db, 'SELECT update_project($1,$2,$3,$4,$5,$6, $7)', array($_SESSION['user'], $oldtitle, $title, $description, $end, $keywords, $amount));		
 		$row = pg_fetch_array($result);
 		if ($row[0] == 1) {
-			echo "<script type=\"text/javascript\">"."alert('Update Success!');"."</script>";
+			echo "<script type=\"text/javascript\">"."alert('Update Success!');"."</script>";	
+			$oldtitle = $title;
 		} else {
 			echo "<script type=\"text/javascript\">"."alert('Update failed, Please try again!');"."</script>";
 		}
 	}
+			
+	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($_SESSION['user'], $oldtitle));		
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($_SESSION['user'], $oldtitle));
+
 ?>
 
 <html>
