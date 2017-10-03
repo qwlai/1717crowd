@@ -49,7 +49,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 
 						<td>
 							<div class="progress">
-									<?php  	$progress = pg_query_params($db, 'SELECT calculate_fund($1, $2)', array($owner, $title));
+									<?php $progress = pg_query_params($db, 'SELECT calculate_fund($1, $2)', array($row['owner'], $row['title']));
 									$amount = pg_fetch_array($progress);
 									$amount_sought = $row['amount_sought'];
 					
@@ -71,7 +71,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 						<?php if(isset($_SESSION['user']))  {
 							echo '<td>';
 								echo '<form action="./add_fund.php" method="post">';
-									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit">Fund</button>';
+									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 								echo '</form>';
 							echo '</td>';
 						}?>
