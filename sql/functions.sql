@@ -67,9 +67,3 @@ return affected;
 END;
 $BODY$
 language 'plpgsql' volatile;
-
-
-
-
-
-

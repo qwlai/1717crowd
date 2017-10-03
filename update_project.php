@@ -5,21 +5,21 @@
 if(isset($_SESSION['user']))  { // Checking whether the session is already there or not 
 	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
-	$project_id = -1;
+	$oldtitle = "";
 
 	if (isset($_POST['submit'])) {
-		$project_id = $_POST['submit'];
+		$oldtitle = $_POST['submit'];
 	}
 
 
 	if (isset($_POST['update'])) {
-		$project_id = $_POST['project_id'];			
+		$oldtitle = $_POST['oldtitle'];			
 		$title = $_POST['title'];
 		$description = $_POST['description'];
 		$end = $_POST['end'];
 		$keywords = $_POST['keywords'];
 		$amount = $_POST['amount'];
-		$result = pg_query_params($db, 'SELECT update_project($1,$2,$3,$4,$5,$6)', array($project_id, $title, $description, $end, $keywords, $amount));		
+		$result = pg_query_params($db, 'SELECT update_project($1,$2,$3,$4,$5,$6, $7)', array($_SESSION['user'], $oldtitle, $title, $description, $end, $keywords, $amount));		
 		$row = pg_fetch_array($result);
 		if ($row[0] == 1) {
 			echo "<script type=\"text/javascript\">"."alert('Update Success!');"."</script>";
@@ -28,7 +28,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		}
 	}
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where project_id = $1', array("$project_id"));
+	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($_SESSION['user'], $oldtitle));
 ?>
 
 <html>
@@ -72,7 +72,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		    <?php echo '<input type="number" style="text-align:center" min="0.00" max="100000000.00" step="1.0" minclass="form-control" id="amount" name="amount" value="'.$row['amount_sought'].'">' ?>
 		  </div>	
 		  <div class="form-group">
-		  	<?php echo '<input type="hidden" name="project_id" value="'.$project_id.'"/>'?>
+		  	<?php echo '<input type="hidden" name="oldtitle" value="'.$oldtitle.'"/>'?>
 		  </div>		  		  	  
 		  <button type="submit" name="update" class="btn btn-primary">Submit</button>
 		</form>
