@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS fund;
 
 CREATE TABLE account (
 	email VARCHAR (64) PRIMARY KEY,
@@ -13,7 +16,7 @@ CREATE TABLE project (
 	start_date DATE NOT NULL,
 	end_date DATE check(end_date > start_date) NOT NULL,
 	keywords VARCHAR (64),
-	amount_sought NUMERIC check(amount_sought > 0) NOT NULL
+	amount_sought NUMERIC check(amount_sought > 0) NOT NULL,
 	primary key (advertiser, title)
 );
 
@@ -21,9 +24,8 @@ CREATE TABLE fund (
 	owner varchar(64),
 	title varchar(64), 
 	investor VARCHAR (64) REFERENCES account (email),
-	amount NUMERIC check(amount > 0) NOT NULL
+	amount NUMERIC check(amount > 0) NOT NULL,
 	primary key (owner, title, investor),
-	foreign key (owner, title) REFERENCES project(advertiser, title)
+	foreign key (owner, title) REFERENCES project(advertiser, title) ON UPDATE CASCADE
 );
-
 
