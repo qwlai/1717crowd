@@ -17,21 +17,20 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 
 
 	if (isset($_POST['update'])) {
-		$owner = $_POST['owner'];			
-		$title = $_POST['title'];
-		$investor = $_POST['investor'];
 		$amount = $_POST['amount'];
-		$result = pg_query_params($db, 'SELECT add_fund($1,$2,$3,$4)', array($owner, $title, $investor, $amount));		
+		$owner = $_POST['owner'];
+		$title = $_POST['title'];
+		$result = pg_query_params($db, 'SELECT add_fund($1,$2,$3,$4)', array($owner, $title, $_SESSION['user'], $amount));		
 		$row = pg_fetch_array($result);
 		if ($row[0] == 1) {
 			echo "<script type=\"text/javascript\">"."alert('Update Success!');"."</script>";
+			header("Location: ./search.php"); 
 		} else {
 			echo "<script type=\"text/javascript\">"."alert('Update failed, Please try again!');"."</script>";
 		}
 	}
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where project_id = $1', array("$project_id"));
-?>
+	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($_SESSION['user'], $title));?>
 
 <html>
 
@@ -55,7 +54,13 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		  </div>
 		  <div class="form-group">
 		    <label for="amount">Amount of fund to add:</label><br>
-		    <?php echo '<input type="number" style="text-align:center" min="0.00" max="100000000.00" step="1.0" minclass="form-control" id="amount" name="amount" value="'.$row['amount_sought'].'">' ?>
+		    <?php echo '<input type="number" style="text-align:center" min="0.00" max="100000000.00" step="1.0" minclass="form-control" id="amount" name="amount" value="0">' ?>
+		  </div>
+		  <div class="form-group">
+		  	<?php echo '<input type="hidden" name="title" value="'.$title.'"/>'?>
+		  </div>
+		  <div class="form-group">
+		  	<?php echo '<input type="hidden" name="owner" value="'.$owner.'"/>'?>
 		  </div>			  		  	  
 		  <button type="submit" name="update" class="btn btn-primary">Submit</button>
 		</form>

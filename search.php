@@ -49,7 +49,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1',
 
 						<td>
 							<div class="progress">
-									<?php  	$progress = pg_query_params($db, 'SELECT calculate_fund($1, $2)', array($owner, $title));
+									<?php $progress = pg_query_params($db, 'SELECT calculate_fund($1, $2)', array($row['owner'], $row['title']));
 									$amount = pg_fetch_array($progress);
 									$amount_sought = $row['amount_sought'];
 					
