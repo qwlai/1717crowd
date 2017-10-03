@@ -43,7 +43,6 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 					<?php while ($row = pg_fetch_array($result)) { 
 					?> 
 					<tr>
-						<td style="display:none;"><?php $project_id = $row['project_id']; echo $project_id; ?></td>
 						<td><?php echo $row['advertiser'] ?></td>
 						<td><?php echo $row['title'] ?></td>
 						<td><?php echo $row['description'] ?></td>
@@ -53,7 +52,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 
 						<td>
 							<div class="progress">
-									<?php  	$progress = pg_query_params($db, 'SELECT calculate_fund($1)', array($project_id));
+									<?php  	$progress = pg_query_params($db, 'SELECT calculate_fund($1, $2)', array($advertiser, $title));
 								   	$amount = pg_fetch_array($progress);
 								   	$amount_sought = $row['amount_sought'];
 
@@ -76,7 +75,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 						
 						<td>
 							<form action="/update_project.php" method="post">
-								<?php echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$project_id.'">Update</button>' ?>
+								<?php echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$advertiser.','.$title.'">Update</button>' ?>
 							</form>
 						</td>
 					</tr>	
