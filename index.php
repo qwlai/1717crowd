@@ -25,16 +25,16 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 	<div class="container">
 		<h2> My Projects </h2>
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table" style="width:100%">
 				<thead>
 					<tr>
-						<th>Owner </th>
-						<th>Title </th>
-						<th>Description </th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th>Keywords</th>
-						<th>Progress</th>
+						<th style="width:10%">Owner </th>
+						<th style="width:10%">Title </th>
+						<th style="width:30%">Description </th>
+						<th style="width:8%">Start Date</th>
+						<th style="width:8%">End Date</th>
+						<th style="width:15%">Keywords</th>
+						<th style="width:10%">Progress</th>
 						<th>Update Project</th>
 					</tr>
 				</thead>
