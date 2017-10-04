@@ -16,11 +16,11 @@ if (isset($_POST['submit'])){
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 	
-	$result = pg_query_params($db, 'SELECT * FROM account WHERE email= $1 and password= $2', array($email, $password)); 
+	$result = pg_query_params($db, 'SELECT password FROM account WHERE email= $1', array($email)); 
 	$row = pg_fetch_array($result);
-	echo $row[0];
+	$verify = password_verify($password, $row[0]);
 
-	if(pg_num_rows($result) != 0) {
+	if ($verify) {
 		$_SESSION['user']=$email;
 		header("Location: ./index.php");    
 	}else{

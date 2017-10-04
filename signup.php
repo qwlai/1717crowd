@@ -22,6 +22,7 @@ if (isset($_POST['submit'])){
 
 	    $email = $_POST['email'];
 	    $name = $_POST['name'];
+        $password = password_hash($password2, PASSWORD_DEFAULT);
 
 	    $result = pg_query_params($db, 'SELECT add_user($1, $2, $3)', array($email, $name, $password)); 
 	    $row = pg_fetch_array($result);
