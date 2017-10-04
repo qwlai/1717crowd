@@ -6,12 +6,12 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 	
 	if (isset($_POST['submit'])) {
-	$title = $_POST['title'];
-	$description = $_POST['description'];
-	$start_date = $_POST['start'];
-	$end_date = $_POST['end'];
-	$keywords = $_POST['keywords'];
-	$amount_sought = $_POST['amount'];
+		$title = $_POST['title'];
+		$description = $_POST['description'];
+		$start_date = $_POST['start'];
+		$end_date = $_POST['end'];
+		$keywords = $_POST['keywords'];
+		$amount_sought = $_POST['amount'];
 	
 	
 		if ($title == '') {
