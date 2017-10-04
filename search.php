@@ -6,7 +6,7 @@ $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgre
 
 $search_field = $_POST['search'];
 
-$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 and keywords ilike $2', array("%".$search_field."%", "%".$search_field."%"));
+$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 or keywords ilike $2', array("%".$search_field."%", "%".$search_field."%"));
 
 ?>
 <html>
