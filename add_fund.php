@@ -11,8 +11,6 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		$details = explode(',',$_POST['submit']);
 		$owner = $details[0];
 		$title = $details[1];
-		echo $owner;
-		echo $title;
 	}
 
 
@@ -22,11 +20,10 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		$title = $_POST['title'];
 		$result = pg_query_params($db, 'SELECT add_fund($1,$2,$3,$4)', array($owner, $title, $_SESSION['user'], $amount));		
 		$row = pg_fetch_array($result);
-		if ($row[0] == 1) {
-			echo "<script type=\"text/javascript\">"."alert('Update Success!');"."</script>";
-			header("Location: ./search.php"); 
+		if ($row[0] != null) {
+			echo "<script> alert('Fund added!'); window.location = './search.php'; </script>";
 		} else {
-			echo "<script type=\"text/javascript\">"."alert('Update failed, Please try again!');"."</script>";
+			echo "<script type=\"text/javascript\">"."alert('Transaction failed, Please try again!');"."</script>";
 		}
 	}
 	

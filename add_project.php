@@ -20,8 +20,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 			$result = pg_query_params($db, 'SELECT add_project($1,$2,$3,$4,$5,$6,$7)', array($_SESSION['user'], $title, $description, $start_date, $end_date,$keywords,$amount_sought)); 
 			$row = pg_fetch_array($result);
 			if ($row[0] != null) {
-				echo "<script type=\"text/javascript\">"."alert('Project added!');"."</script>";
-				header("Location: ./index.php");  
+			echo "<script> alert('Project added!'); window.location = './index.php'; </script>";
 			} else {
 				echo "<script type=\"text/javascript\">"."alert('Error adding project');"."</script>";
 			}
