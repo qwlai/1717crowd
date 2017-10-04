@@ -14,14 +14,14 @@ END;
 $BODY$
 language 'plpgsql' volatile;
 
-CREATE OR REPLACE FUNCTION add_project(_advertiser varchar, _title varchar, _description text, _start_date date, _end_date date, _keywords varchar, _amount_sought numeric)
+CREATE OR REPLACE FUNCTION add_project(_owner varchar, _title varchar, _description text, _start_date date, _end_date date, _keywords varchar, _amount_sought numeric)
 returns varchar as
 $BODY$
 BEGIN
-IF EXISTS (SELECT a.name, p.title FROM account a, project p WHERE p.advertiser = _advertiser AND p.title = _title AND a.email = _advertiser) THEN
+IF EXISTS (SELECT a.name, p.title FROM account a, project p WHERE p.owner = _owner AND p.title = _title AND a.email = _owner) THEN
 	return 'Project already exists!';
 END IF;
-INSERT INTO project(advertiser, title, description, start_date , end_date, keywords, amount_sought) VALUES (_advertiser, _title, _description, _start_date, _end_date, _keywords, _amount_sought);
+INSERT INTO project(owner, title, description, start_date , end_date, keywords, amount_sought) VALUES (_owner, _title, _description, _start_date, _end_date, _keywords, _amount_sought);
 return 'Project added!';
 END;
 $BODY$
