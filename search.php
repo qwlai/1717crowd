@@ -5,8 +5,12 @@
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
 $search_field = $_POST['search'];
+$results_per_page = 10;
 
-$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 or keywords ilike $2', array("%".$search_field."%", "%".$search_field."%"));
+if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
+$start_from = ($page-1) * $results_per_page;
+
+$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 or keywords ilike $2 LIMIT $3 OFFSET $4', array("%".$search_field."%", "%".$search_field."%", $results_per_page, $start_from));
 
 ?>
 <html>
@@ -79,9 +83,49 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 					</tr>	
 			</table>
 		</div>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<?php 					
+					$result = pg_query_params($db, 'SELECT count(*) as total FROM projectview WHERE title ilike $1 or keywords ilike $2', array("%".$search_field."%", "%".$search_field."%"));
+						
+					while ($row = pg_fetch_array($result)) {
+						$total_pages = ceil($row['total'] / $results_per_page);
+					}
+
+					$current_page = $start_from/$results_per_page + 1; 
+					$previous = $current_page - 1;
+					$next = $current_page + 1;
+
+					if ($current_page == 1) {	
+						echo "<li class='page-item disabled'><span class='page-link'>Previous</span></li>";
+					} else {
+						echo "<li class='page-item'><a class='page-link' href='search.php?page=".$previous."'>Previous</a></li>";
+					}
+
+
+					for ($i=1; $i <= $total_pages; $i++) {
+						if ($i == $current_page) {
+							echo "<li class='page-item active'><span class='page-link'>".$i."<span class='sr-only'>(current)</span></span></li>";
+						} else {
+							echo "<li class='page-item'><a class='page-link' href='search.php?page=".$i."'>".$i."</a></li>";
+						}
+					}
+
+					if ($current_page == $total_pages) {	
+						echo "<li class='page-item disabled'><span class='page-link'>Next</span></li>";
+					} else {
+						echo "<li class='page-item'><a class='page-link' href='search.php?page=".$next."'>Next</a></li>";
+					}
+				?>
+			</ul>
+		</nav>			
 	</div>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>
+
+
