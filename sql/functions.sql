@@ -1,4 +1,5 @@
 ﻿CREATE VIEW projectview AS SELECT * FROM project;
+CREATE VIEW fundview as SELECT * FROM fund;
 
 CREATE OR REPLACE FUNCTION add_fund(_owner varchar, _title varchar, _investor varchar,  _amount numeric)
 returns varchar as
@@ -46,8 +47,8 @@ $BODY$
 DECLARE result int;
 
 BEGIN
-IF EXISTS (SELECT amount FROM fund WHERE owner = _owner AND title = _title) THEN
-SELECT sum(amount) FROM fund WHERE owner  = _owner AND title = _title GROUP BY _owner, _title into result;
+IF EXISTS (SELECT amount FROM fundview WHERE owner = _owner AND title = _title) THEN
+SELECT sum(amount) FROM fundview WHERE owner  = _owner AND title = _title GROUP BY _owner, _title into result;
 return result;
 END IF;
 return 0;
