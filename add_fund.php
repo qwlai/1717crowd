@@ -25,7 +25,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		}
 	}
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($_SESSION['user'], $title));?>
+	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 and title = $2', array($owner, $title));?>
 
 <html>
 
