@@ -73,11 +73,14 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 							</div>	
 						</td>
 						<?php if(isset($_SESSION['user']))  {
+
+							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
 							echo '<td>';
 								echo '<form action="./add_fund.php" method="post">';
 									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 								echo '</form>';
 							echo '</td>';
+							}
 						}?>
 						<?php } ?>
 					</tr>	
