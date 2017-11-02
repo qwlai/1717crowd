@@ -38,7 +38,8 @@
                             <p class="navbar-text navbar-right">
 
                                 <label class="email"><?php echo $_SESSION['user']; ?> </label>
-                                <a class="btn btn-default action-button" role="button" href="add_project.php">Add Project</a>                                
+                                <a class="btn btn-default action-button" role="button" href="add_project.php">Add Project</a>  
+								<a class="btn btn-default action-button" role="button" href="view_createdproject.php">View Created Projects</a> 
                                 <a class="btn btn-default action-button" role="button" href="logout.php">Logout</a>
                             </p>
                         <?php } ?>
