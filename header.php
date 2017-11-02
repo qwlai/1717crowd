@@ -19,6 +19,7 @@
             <nav class="navbar navbar-default navigation-clean-search">
                 <div class="container">
                     <div class="navbar-header"><a class="navbar-brand navbar-link" href="index.php">Home </a>
+					<a class="navbar-brand navbar-link" href="view_project.php">View Project</a>
                         <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                     </div>
                     <div class="collapse navbar-collapse" id="navcol-1">
@@ -38,7 +39,7 @@
                             <p class="navbar-text navbar-right">
 
                                 <label class="email"><?php echo $_SESSION['user']; ?> </label>
-                                <a class="btn btn-default action-button" role="button" href="add_project.php">Add Project</a>                                
+                                <a class="btn btn-default action-button" role="button" href="add_project.php">Add Project</a> 
                                 <a class="btn btn-default action-button" role="button" href="logout.php">Logout</a>
                             </p>
                         <?php } ?>
