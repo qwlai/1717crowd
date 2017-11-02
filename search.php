@@ -5,9 +5,18 @@
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
 $search_field = $_POST['search'];
+
 $results_per_page = 10;
 
-if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
+if (isset($_GET["search"])) { 
+	$search_field=$_GET["search"]; 
+	$arr=explode("?page=", $search_field,2); 
+	$search_field = $arr[0];
+	$page = $arr[1];
+} else { 
+	$page=1; 
+}
+
 $start_from = ($page-1) * $results_per_page;
 
 $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 or keywords ilike $2 LIMIT $3 OFFSET $4', array("%".$search_field."%", "%".$search_field."%", $results_per_page, $start_from));
@@ -102,7 +111,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 					if ($current_page == 1) {	
 						echo "<li class='page-item disabled'><span class='page-link'>Previous</span></li>";
 					} else {
-						echo "<li class='page-item'><a class='page-link' href='search.php?page=".$previous."'>Previous</a></li>";
+						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$previous."'>Previous</a></li>";
 					}
 
 
@@ -110,14 +119,14 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 						if ($i == $current_page) {
 							echo "<li class='page-item active'><span class='page-link'>".$i."<span class='sr-only'>(current)</span></span></li>";
 						} else {
-							echo "<li class='page-item'><a class='page-link' href='search.php?page=".$i."'>".$i."</a></li>";
+							echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$i."'>".$i."</a></li>";
 						}
 					}
 
 					if ($current_page == $total_pages) {	
 						echo "<li class='page-item disabled'><span class='page-link'>Next</span></li>";
 					} else {
-						echo "<li class='page-item'><a class='page-link' href='search.php?page=".$next."'>Next</a></li>";
+						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$next."'>Next</a></li>";
 					}
 				?>
 			</ul>

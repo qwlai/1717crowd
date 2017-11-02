@@ -68,3 +68,19 @@ return affected;
 END;
 $BODY$
 language 'plpgsql' volatile;
+
+
+CREATE OR REPLACE FUNCTION log_project_deletion() RETURNS trigger AS $$
+
+BEGIN
+INSERT INTO deleted_project(delete_time, owner, title, description, start_date, end_date, keywords, amount_sought) VALUES(now(), OLD.owner, OLD.title, OLD.description, OLD.start_date, OLD.end_date, OLD.keywords, OLD.amount_sought);
+RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER project_deletion
+BEFORE DELETE ON project
+FOR EACH ROW
+EXECUTE PROCEDURE log_project_deletion();
+
+
