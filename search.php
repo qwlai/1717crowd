@@ -123,7 +123,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 						}
 					}
 
-					if ($current_page == $total_pages) {	
+					if ($current_page == $total_pages || $total_pages == 0) {	
 						echo "<li class='page-item disabled'><span class='page-link'>Next</span></li>";
 					} else {
 						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$next."'>Next</a></li>";
