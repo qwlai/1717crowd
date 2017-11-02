@@ -25,7 +25,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 	<div class="container">
 		<h2> My Projects </h2>
 		<div class="table-responsive">
-			<table class="table" style="width:100%">
+			<table class="table table-striped" style="width:100%">
 				<thead>
 					<tr>
 						<th style="width:10%">Owner </th>
