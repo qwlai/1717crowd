@@ -46,7 +46,11 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 						<th style="width:15%">Keywords</th>
 						<th style="width:10%">Progress</th>
 						<?php if(isset($_SESSION['user']))  {
-							echo '<th>Add Fund</th>';
+							echo '<th>Fund</th>';
+							if ($_SESSION['admin'] == 't') {
+								echo '<th>Modify </th>';
+								echo '<th>Delete</th>';
+							}
 						}?>
 					</tr>
 				</thead>
@@ -83,11 +87,27 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 o
 						<?php if(isset($_SESSION['user']))  {
 
 							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
-							echo '<td>';
-								echo '<form action="./add_fund.php" method="post">';
-									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
-								echo '</form>';
-							echo '</td>';
+								echo '<td>';
+									echo '<form action="./add_fund.php" method="post">';
+										echo '<button class="btn btn-success btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
+									echo '</form>';
+								echo '</td>';
+							} else {
+								echo '<td></td>';
+							}
+
+							if ($_SESSION['admin'] == 't') {
+								echo '<td>';
+									echo '<form action="./update_project.php" method="post">';
+										echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['title'].'">Update</button>';
+										echo '<input type="hidden" name="owner" value="'.$row['owner'].'"/>';
+									echo '</form>';
+								echo '</td>';	
+								echo '<td>';
+									echo '<form action="./update_project.php" method="post">';
+										echo '<button class="btn btn-danger btn-xs btn-block" type="submit" name="submit" value="'.$row['title'].'">Delete</button>';
+									echo '</form>';
+								echo '</td>';																
 							}
 						}?>
 						<?php } ?>

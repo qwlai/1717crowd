@@ -47,7 +47,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 						<th style="width:8%">End Date</th>
 						<th style="width:15%">Keywords</th>
 						<th style="width:10%">Progress</th>
-						<th>Update Project</th>
+						<th>Update</th>
 					</tr>
 				</thead>
 				

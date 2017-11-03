@@ -16,12 +16,13 @@ if (isset($_POST['submit'])){
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 	
-	$result = pg_query_params($db, 'SELECT password FROM account WHERE email= $1', array($email)); 
+	$result = pg_query_params($db, 'SELECT password, is_admin FROM account WHERE email= $1', array($email)); 
 	$row = pg_fetch_array($result);
 	$verify = password_verify($password, $row[0]);
 
 	if ($verify) {
 		$_SESSION['user']=$email;
+		$_SESSION['admin']=$row[1];
 		header("Location: ./index.php");    
 	}else{
 		$error = "Username or Password is invalid!";
