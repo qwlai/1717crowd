@@ -4,15 +4,11 @@
 <?php
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
-$search_field = $_POST['search'];
 
 $results_per_page = 10;
 
-if (isset($_GET["search"])) { 
-	$search_field=$_GET["search"]; 
-	$arr=explode("?page=", $search_field,2); 
-	$search_field = $arr[0];
-	$page = $arr[1];
+if (isset($_GET["page"])) { 
+	$page = $_GET["page"]; 
 } else { 
 	$page=1; 
 }
@@ -108,10 +104,10 @@ group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keyw
 		<nav aria-label="Page navigation example">
 			<ul class="pagination">
 				<?php 					
-					$result = pg_query_params($db, 'SELECT PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought 
+					$result = pg_query_params($db, 'SELECT count(*) as total FROM (SELECT PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought 
 													FROM projectview PV, fundview FV 
 													WHERE PV.title = FV.title AND FV.investor = $1 
-													group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought' , array($user));
+													group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought) src' , array($user));
 					while ($row = pg_fetch_array($result)) {
 						$total_pages = ceil($row['total'] / $results_per_page);
 					}
