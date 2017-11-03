@@ -83,21 +83,22 @@ group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keyw
 						</td>
 						<?php 
 							$contributions = pg_query_params($db, 'select sum(amount) AS contributions_list from fundview where investor = $1 and title = $2 group by investor,owner,title order by owner,title',array($user,$row['title']));
-							 $row = pg_fetch_array($contributions);
-								echo '<td style="text-align:center;">' . $row['contributions_list'] . '</td>';
+							 $rows = pg_fetch_array($contributions);
+								echo '<td style="text-align:center;">' . $rows['contributions_list'] . '</td>';
 						?>
-						<td>
+						
 						<?php if(isset($_SESSION['user']))  {
 							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
 							echo '<td>';
 								echo '<form action="./add_fund.php" method="post">';
+									echo '<input type="hidden" value="test" name="f" />';
 									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 								echo '</form>';
 							echo '</td>';
 							}
 						}?>
 						<?php } ?>
-						</td>
+						
 					</tr>	
 			</table>
 		</div>
