@@ -45,7 +45,7 @@ $result = pg_query($db, "SELECT SQ.owner, SQ.title, SQ.description, SQ.amount_ra
 						if ($row['timeleft'] < 0) {
 							echo "<tr>";
 						} else {
-							echo "<tr bgcolor=#66ff33>";
+							echo "<tr bgcolor=#b1fbb1>";
 						}
 					?>
 						<td><?php echo $row['owner']; ?></td>

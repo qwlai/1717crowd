@@ -63,6 +63,12 @@ if ($search_owner) {
 
 <body>
 	<div class="container">
+	<h4>Colours legend:</h4>
+	<div class="box" style="background-color:#e6e6e6"></div><p>Projects already ended</p>
+	<div class="box" style="background-color:#cce6ff"></div><p>Projects that have yet to start</p>
+	</div>
+	
+	<div class="container">
 		<h2>Search Results for <?php echo '"'.$search_field.'"'; ?></h2>
 		<div class="table-responsive">
 			<table class="table" style="width:100%">
@@ -87,9 +93,9 @@ if ($search_owner) {
 					<?php while ($row = pg_fetch_array($result)) { 
 						$today = date('Y-m-d');
 						if ($row['end_date'] <= $today) {
-							echo '<tr bgcolor="#D3D3D3">';
+							echo '<tr bgcolor="#e6e6e6">';
 						} else if ($row['start_date'] > $today) {
-							echo '<tr bgcolor="#9AE5FF">';
+							echo '<tr bgcolor="#cce6ff">';
 						} else {
 							echo "<tr>";
 						}
