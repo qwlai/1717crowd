@@ -24,7 +24,7 @@
 
 					<form class="navbar-form navbar-left submit_on_enter" method="post" action="search.php">
 						<div class="input-group add-on">
-							<input class="form-control search-field" type="search" name="search" placeholder="Search Project by Title/Keyword" id="search-field">
+							<input class="form-control search-field" type="search" name="search" placeholder="Search Project" id="search-field">
 
 							<div class="input-group-btn">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="caret"></i></button>
