@@ -3,7 +3,7 @@
 
 <?php
 if(isset($_SESSION['user']))  {
-	
+
 	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 	$results_per_page = 10;
 
@@ -36,7 +36,7 @@ if(isset($_SESSION['user']))  {
 	<div class="container">
 		<h2>View Projects Funded</h2>
 		<div class="table-responsive">
-			<table class="table table-striped" style="width:100%">
+			<table class="table" style="width:100%">
 				<thead>
 					<tr>
 						<th style="width:10%">Owner </th>
@@ -47,13 +47,18 @@ if(isset($_SESSION['user']))  {
 						<th style="width:10%">Keywords</th>
 						<th style="width:10%">Progress</th>
 						<th style="width:12%">My Contributions</th>
-						<?php if(isset($_SESSION['user']))  {
-							echo '<th>Fund</th>';
-						}?>
+						<th>Fund</th>
 					</tr>
 				</thead>
-					<?php while ($row = pg_fetch_array($result)) { ?> 
-					<tr>
+					<?php while ($row = pg_fetch_array($result)) { 
+						$today = date('Y-m-d');
+						if ($row['end_date'] <= $today) {
+							echo '<tr bgcolor="#D3D3D3">';
+						} else {
+							echo "<tr>";
+						}
+					?> 
+
 						<td><?php echo $row['owner'] ?></td>
 						<td><?php echo $row['title'] ?></td>
 						<td><?php echo $row['description'] ?></td>
@@ -87,16 +92,20 @@ if(isset($_SESSION['user']))  {
 							echo '<td style="text-align:center;">' . $output['contributions_list'] . '</td>';
 						?>
 						
-						<?php if(isset($_SESSION['user']))  {
-							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
+						<?php 
 							echo '<td>';
+							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
+
 								echo '<form action="./add_fund.php" method="post">';
 									echo '<input type="hidden" value="test" name="f" />';
 									echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 								echo '</form>';
-							echo '</td>';
+
+							} else {
+								echo 'Project Ended';
 							}
-						}?>
+							echo '</td>';
+						?>
 						<?php } ?>
 						
 					</tr>	

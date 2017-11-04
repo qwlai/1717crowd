@@ -14,12 +14,11 @@ if (isset($_GET["page"])) {
 $start_from = ($page - 1) * $results_per_page;
 
 if(isset($_SESSION['user']))  { // Checking whether the session is already there or not if 
-							  
 	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
 	$user = $_SESSION['user'];
 	
-	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 LIMIT $2 OFFSET $3', array($user, $results_per_page, $start_from));
+	$result = pg_query_params($db, 'SELECT * FROM projectview where owner = $1 ORDER BY start_date LIMIT $2 OFFSET $3', array($user, $results_per_page, $start_from));
 
 ?>
 <html>
@@ -35,24 +34,28 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 	<div class="container">
 		<h2> My Projects </h2>
 		<div class="table-responsive">
-			<table class="table table-striped" style="width:100%">
+			<table class="table" style="width:100%">
 				<thead>
 					<tr>
-						<th style="width:10%">Owner </th>
 						<th style="width:10%">Title </th>
 						<th style="width:30%">Description </th>
 						<th style="width:8%">Start Date</th>
 						<th style="width:8%">End Date</th>
 						<th style="width:15%">Keywords</th>
 						<th style="width:10%">Progress</th>
-						<th>Update</th>
+						<th style="width:9%">Update</th>
+						<th style="width:10%">Close Project</th>
 					</tr>
 				</thead>
 				
 					<?php while ($row = pg_fetch_array($result)) { 
-					?> 
-					<tr>
-						<td><?php echo $row['owner']; ?></td>
+						$today = date('Y-m-d');
+						if ($row['end_date'] <= $today) {
+							echo '<tr bgcolor="#D3D3D3">';
+						} else {
+							echo "<tr>";
+						}
+					?>
 						<td><?php echo $row['title']; ?></td>
 						<td><?php echo $row['description']; ?></td>
 						<td><?php echo $row['start_date']; ?></td>
@@ -72,7 +75,6 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 										<?php echo $amount[0]."/".$amount_sought; ?>
 										</div>
 									<?php } else {
-										
 										echo '<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$percentage.'" aria-valuemin="0" aria-valuemax="100" style="width:'.$percentage.'%">';
 											echo '<span>'.$amount[0].'/'.$amount_sought.'</span>';
 										echo '</div>';
@@ -86,6 +88,17 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 							<form action="/update_project.php" method="post">
 								<?php echo '<button class="btn btn-warning btn-xs btn-block" type="submit" name="submit" value="'.$row['title'].'">Update</button>' ?>
 							</form>
+						</td>
+
+						<td>
+						<?php 
+							if ($row['end_date'] <= $today) {
+								echo "Project Ended";
+							} else { ?>
+								<form action="/close_project.php" method="post">
+									<?php echo '<button class="btn btn-danger btn-xs btn-block" id="fire" type="submit" name="submit" onclick="confirmation('."'".$row['title']."'".')" value="'.$row['title'].'">Close Project</button>' ?>		
+								</form>	
+							<?php } ?>					
 						</td>
 					</tr>	
 					<?php } ?>
@@ -130,6 +143,13 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 	</div>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+	<script>
+    function confirmation(delName){
+    	var del=confirm("Are you sure you want to delete "+delName+"?");
+    return del;
+}
+</script>
 </body>
 
 </html>
