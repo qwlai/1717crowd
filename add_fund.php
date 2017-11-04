@@ -9,19 +9,22 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		$details = explode(',',$_POST['submit']);
 		$owner = $details[0];
 		$title = $details[1];
+		$previous = $_SERVER['HTTP_REFERER'];		
 	}
+
 
 
 	if (isset($_POST['update'])) {
 		$amount = $_POST['amount'];
 		$owner = $_POST['owner'];
 		$title = $_POST['title'];
+		$previous = $_POST['previous'];
 		$result = pg_query_params($db, 'SELECT add_fund($1,$2,$3,$4)', array($owner, $title, $_SESSION['user'], $amount));		
 		$row = pg_fetch_array($result);
 		if ($row[0] != null) {
-			echo "<script> alert('Fund added!'); window.location = './search.php'; </script>";
+			echo "<script> alert('Fund added!'); window.location = '".$previous."'; </script>";
 		} else {
-			echo "<script type=\"text/javascript\">"."alert('Transaction failed, Please try again!');"."</script>";
+			echo "<script type=\"text/javascript\">"."alert('Transaction failed, Please enter a positive amount!');"."</script>";
 		}
 	}
 	
@@ -57,6 +60,7 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 		  	<?php echo '<input type="hidden" name="owner" value="'.$owner.'"/>'?>
 		  </div>			  		  	  
 		  <button type="submit" name="update" class="btn btn-primary">Submit</button>
+		  	<?php echo '<input type="hidden" name="previous" value="'.$previous.'"/>'?>
 		</form>
 		<?php }?>
     </div>

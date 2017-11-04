@@ -54,12 +54,12 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 					<?php while ($row = pg_fetch_array($result)) { 
 					?> 
 					<tr>
-						<td><?php echo $row['owner'] ?></td>
-						<td><?php echo $row['title'] ?></td>
-						<td><?php echo $row['description'] ?></td>
-						<td><?php echo $row['start_date'] ?></td>
-						<td><?php echo $row['end_date'] ?></td>
-						<td><?php echo $row['keywords'] ?></td>
+						<td><?php echo $row['owner']; ?></td>
+						<td><?php echo $row['title']; ?></td>
+						<td><?php echo $row['description']; ?></td>
+						<td><?php echo $row['start_date']; ?></td>
+						<td><?php echo $row['end_date']; ?></td>
+						<td><?php echo $row['keywords']; ?></td>
 
 						<td>
 							<div class="progress">

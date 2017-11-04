@@ -48,7 +48,7 @@ group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keyw
 						<th style="width:10%">Progress</th>
 						<th style="width:12%">My Contributions</th>
 						<?php if(isset($_SESSION['user']))  {
-							echo '<th>Add Fund</th>';
+							echo '<th>Fund</th>';
 						}?>
 					</tr>
 				</thead>
@@ -82,9 +82,9 @@ group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keyw
 							</div>	
 						</td>
 						<?php 
-							$contributions = pg_query_params($db, 'select sum(amount) AS contributions_list from fundview where investor = $1 and title = $2 group by investor,owner,title order by owner,title',array($user,$row['title']));
-							 $rows = pg_fetch_array($contributions);
-								echo '<td style="text-align:center;">' . $rows['contributions_list'] . '</td>';
+							$contributions = pg_query_params($db, 'select sum(amount) AS contributions_list from fundview where investor = $1 and title = $2 and owner = $3',array($user,$row['title'], $row['owner']));
+							$output = pg_fetch_array($contributions);
+							echo '<td style="text-align:center;">' . $output['contributions_list'] . '</td>';
 						?>
 						
 						<?php if(isset($_SESSION['user']))  {
