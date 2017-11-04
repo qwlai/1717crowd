@@ -65,7 +65,7 @@ if ($search_owner) {
 	<div class="container">
 		<h2>Search Results for <?php echo '"'.$search_field.'"'; ?></h2>
 		<div class="table-responsive">
-			<table class="table table-striped" style="width:100%">
+			<table class="table" style="width:100%">
 				<thead>
 					<tr>
 						<th style="width:10%">Owner </th>
@@ -84,8 +84,17 @@ if ($search_owner) {
 						}?>
 					</tr>
 				</thead>
-					<?php while ($row = pg_fetch_array($result)) { ?> 
-					<tr>
+					<?php while ($row = pg_fetch_array($result)) { 
+						$today = date('Y-m-d');
+						if ($row['end_date'] <= $today) {
+							echo '<tr bgcolor="#D3D3D3">';
+						} else if ($row['start_date'] > $today) {
+							echo '<tr bgcolor="#9AE5FF">';
+						} else {
+							echo "<tr>";
+						}
+					?> 
+					
 						<td><?php echo $row['owner'] ?></td>
 						<td><?php echo $row['title'] ?></td>
 						<td><?php echo $row['description'] ?></td>
@@ -115,16 +124,19 @@ if ($search_owner) {
 							</div>	
 						</td>
 						<?php if(isset($_SESSION['user']))  {
-
+							echo '<td>';
 							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
-								echo '<td>';
 									echo '<form action="./add_fund.php" method="post">';
 										echo '<button class="btn btn-success btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 									echo '</form>';
-								echo '</td>';
 							} else {
-								echo '<td></td>';
+								if ($row['end_date'] <= $today) {
+									echo 'Project Ended';
+								} else if ($row['start_date'] > $today) {
+									echo 'Future Project';
+								}
 							}
+							echo '</td>';
 
 							if ($_SESSION['admin'] == 't') {
 								echo '<td>';
