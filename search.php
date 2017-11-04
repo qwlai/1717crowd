@@ -47,7 +47,7 @@ if ($search_owner) {
 		ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $6 OFFSET $7', array("%".$search_field."%", "%".$search_field."%", $search_owner, $search_start, $search_end,
 		$results_per_page, $start_from));
 } else {
-	$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 OR keywords ilike $2 AND start_date >= $3 AND end_date <= $4
+	$result = pg_query_params($db, 'SELECT * FROM projectview WHERE (title ilike $1 OR keywords ilike $2) AND start_date >= $3 AND end_date <= $4
 		ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $5 OFFSET $6', array("%".$search_field."%", "%".$search_field."%", $search_start, $search_end,
 		 $results_per_page, $start_from));
 }
