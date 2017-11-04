@@ -11,9 +11,7 @@ if (isset($_GET["page"])) {
 	$page = 1; 
 }
 
-
 $start_from = ($page - 1) * $results_per_page;
-
 
 if(isset($_SESSION['user']))  { // Checking whether the session is already there or not if 
 							  
@@ -136,4 +134,9 @@ if(isset($_SESSION['user']))  { // Checking whether the session is already there
 
 </html>
 
-<?php } ?>
+<?php
+	} else { 
+		header("Location: ./login.php");  
+	}
+?>
+

@@ -2,24 +2,24 @@
 <?php include 'header.php'  ?>  
 
 <?php
-$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
+if(isset($_SESSION['user']))  {
+	
+	$db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
+	$results_per_page = 10;
 
+	if (isset($_GET["page"])) { 
+		$page = $_GET["page"]; 
+	} else { 
+		$page=1; 
+	}
+	$user = $_SESSION['user'];
 
-$results_per_page = 10;
+	$start_from = ($page-1) * $results_per_page;
 
-if (isset($_GET["page"])) { 
-	$page = $_GET["page"]; 
-} else { 
-	$page=1; 
-}
-$user = $_SESSION['user'];
-
-$start_from = ($page-1) * $results_per_page;
-
-$result = pg_query_params($db, 'SELECT PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought 
-FROM projectview PV, fundview FV 
-WHERE PV.title = FV.title AND FV.investor = $1 
-group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought LIMIT $2 OFFSET $3' , array($user,$results_per_page,$start_from));
+	$result = pg_query_params($db, 'SELECT PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought 
+	FROM projectview PV, fundview FV 
+	WHERE PV.title = FV.title AND FV.investor = $1 
+	group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keywords, PV.amount_sought LIMIT $2 OFFSET $3' , array($user,$results_per_page,$start_from));
 
 ?>
 <html>
@@ -149,4 +149,8 @@ group by PV.owner, PV.title, PV.description, PV.start_date, PV.end_date, PV.keyw
 
 </html>
 
-
+<?php
+	} else { 
+		header("Location: ./login.php");  
+	}
+?>
