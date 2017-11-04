@@ -22,7 +22,7 @@
 						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
 					</div>		
 
-					<form class="navbar-form navbar-left" method="post" action="search.php">
+					<form class="navbar-form navbar-left submit_on_enter" method="post" action="search.php">
 						<div class="input-group add-on">
 							<input class="form-control search-field" type="search" name="search" placeholder="Search Project" id="search-field">
 
@@ -34,19 +34,19 @@
 
 										<label style="margin-right:38px;">Owner:</label>
 										<div class="form-group">
-											<input type="email" class="form-control" name="owner" placeholder="Owner's Email">
+											<input type="text" class="form-control" name="owner" placeholder="Owner's Email">
 										</div>
 											
 										<br/>
 										<label style="margin-right:15px;">Start Date:</label>
 										<div class="form-group">
-											<input type="date" class="form-control"  name="start">
+											<input type="date" class="form-control" value="2010-01-01" name="start">
 										</div>
 											
 										<br/>
 										<label style="margin-right:21px;">End Date:</label>
 										<div class="form-group">
-											<input type="date" class="form-control"  name="end">
+											<input type="date" class="form-control" value="2030-12-31" name="end">
 										</div>
 										<br>
 									</div>

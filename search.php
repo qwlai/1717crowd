@@ -5,13 +5,28 @@
 $db = pg_connect("host=188.166.229.13 port=5455 dbname=crowdfunding user=postgres password=210217huhu");
 
 $search_field = $_POST['search'];
+$search_owner = $_POST['owner'];
+$search_start = $_POST['start'];
+$search_end = $_POST['end'];
 
 $results_per_page = 10;
 
 if (isset($_GET["search"])) { 
-	$search_field=$_GET["search"]; 
-	$arr=explode("?page=", $search_field,2); 
+	$str=$_GET["search"];
+	$arr=explode("?owner=", $str,2); 
 	$search_field = $arr[0];
+	$str=$arr[1];
+
+	$arr=explode("?start=", $str, 2);
+	$search_owner=$arr[0];
+	$str=$arr[1];;
+
+	$arr=explode("?end=", $str, 2);
+	$search_start=$arr[0];
+	$str=$arr[1];
+
+	$arr=explode("?page=", $str,2);
+	$search_end=$arr[0];
 	$page = $arr[1];
 } else { 
 	$page=1; 
@@ -19,9 +34,23 @@ if (isset($_GET["search"])) {
 
 $start_from = ($page-1) * $results_per_page;
 
-$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 OR keywords ilike $2 
-	ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $3 OFFSET $4', array("%".$search_field."%", "%".$search_field."%", $results_per_page, $start_from));
+if (!$search_start) {
+	$search_start = '2010-01-01';
+}
 
+if (!$search_end) {
+	$search_end = '2030-12-31';
+}
+
+if ($search_owner) {
+	$result = pg_query_params($db, 'SELECT * FROM projectview WHERE (title ilike $1 OR keywords ilike $2) AND owner = $3 AND start_date >= $4 AND end_date <= $5 
+		ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $6 OFFSET $7', array("%".$search_field."%", "%".$search_field."%", $search_owner, $search_start, $search_end,
+		$results_per_page, $start_from));
+} else {
+	$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 OR keywords ilike $2 AND start_date >= $3 AND end_date <= $4
+		ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $5 OFFSET $6', array("%".$search_field."%", "%".$search_field."%", $search_start, $search_end,
+		 $results_per_page, $start_from));
+}
 ?>
 <html>
 
@@ -118,8 +147,15 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 O
 		<nav aria-label="Page navigation example">
 			<ul class="pagination">
 				<?php 					
-					$result = pg_query_params($db, 'SELECT count(*) as total FROM projectview WHERE title ilike $1 or keywords ilike $2', array("%".$search_field."%", "%".$search_field."%"));
-						
+
+					if ($search_owner) {
+						$result = pg_query_params($db, 'SELECT count(*) as total FROM projectview WHERE (title ilike $1 or keywords ilike $2) AND owner = $3 AND start_date >= $4 AND end_date <= $5', array("%".$search_field."%", "%".$search_field."%", $search_owner, $search_start, $search_end));
+					} else {
+						$result = pg_query_params($db, 'SELECT count(*) as total FROM projectview WHERE (title ilike $1 or keywords ilike $2) AND start_date >= $3 AND end_date <= $4', 
+							array("%".$search_field."%", "%".$search_field."%",$search_start, $search_end));	
+					}
+					
+
 					while ($row = pg_fetch_array($result)) {
 						$total_pages = ceil($row['total'] / $results_per_page);
 					}
@@ -131,7 +167,7 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 O
 					if ($current_page == 1) {	
 						echo "<li class='page-item disabled'><span class='page-link'>Previous</span></li>";
 					} else {
-						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$previous."'>Previous</a></li>";
+						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?owner=".$search_owner."?start=".$search_start."?end=".$search_end."?page=".$previous."'>Previous</a></li>";
 					}
 
 
@@ -139,14 +175,14 @@ $result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 O
 						if ($i == $current_page) {
 							echo "<li class='page-item active'><span class='page-link'>".$i."<span class='sr-only'>(current)</span></span></li>";
 						} else {
-							echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$i."'>".$i."</a></li>";
+							echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?owner=".$search_owner."?start=".$search_start."?end=".$search_end."?page=".$i."'>".$i."</a></li>";
 						}
 					}
 
 					if ($current_page == $total_pages || $total_pages == 0) {	
 						echo "<li class='page-item disabled'><span class='page-link'>Next</span></li>";
 					} else {
-						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?page=".$next."'>Next</a></li>";
+						echo "<li class='page-item'><a class='page-link' href='search.php?search=".$search_field."?owner=".$search_owner."?start=".$search_start."?end=".$search_end."?page=".$next."'>Next</a></li>";
 					}
 				?>
 			</ul>
