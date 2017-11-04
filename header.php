@@ -17,16 +17,44 @@
 		<div class="header-dark" style="padding:0px;">
 			<nav class="navbar navbar-default navigation-clean-search">
 				<div class="container">
+
 					<div class="navbar-header"><a class="navbar-brand navbar-link" href="index.php">Home </a>
 						<button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-					</div>
+					</div>		
 
-					<form class="navbar-form navbar-left" target="_self" method="post" action="search.php">
-						 <div class="form-group">
-							<label class="control-label" for="search-field"><i class="glyphicon glyphicon-search"></i></label>
-							 <input class="form-control search-field" type="search" name="search" placeholder="Search Project" id="search-field">
+					<form class="navbar-form navbar-left" method="post" action="search.php">
+						<div class="input-group add-on">
+							<input class="form-control search-field" type="search" name="search" placeholder="Search Project" id="search-field">
+
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="caret"></i></button>
+									<div class="dropdown-menu dropdown-menu-left">
+										<label> Filter By: </label>
+										<br/>
+
+										<label style="margin-right:38px;">Owner:</label>
+										<div class="form-group">
+											<input type="email" class="form-control" name="owner" placeholder="Owner's Email">
+										</div>
+											
+										<br/>
+										<label style="margin-right:15px;">Start Date:</label>
+										<div class="form-group">
+											<input type="date" class="form-control"  name="start">
+										</div>
+											
+										<br/>
+										<label style="margin-right:21px;">End Date:</label>
+										<div class="form-group">
+											<input type="date" class="form-control"  name="end">
+										</div>
+										<br>
+									</div>
+								<button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							</div>
 						</div>
 					</form>     
+
 
 					<?php if (!isset($_SESSION['user'])) { ?> 
 						<div class="navbar-right">
@@ -48,6 +76,11 @@
 	</div>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.dropdown-toggle').dropdown();
+		});
+	</script>
 </body>
 
 </html>

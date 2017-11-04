@@ -19,7 +19,8 @@ if (isset($_GET["search"])) {
 
 $start_from = ($page-1) * $results_per_page;
 
-$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 or keywords ilike $2 order by now() < start_date or end_date < now(), end_date - now() asc LIMIT $3 OFFSET $4', array("%".$search_field."%", "%".$search_field."%", $results_per_page, $start_from));
+$result = pg_query_params($db, 'SELECT * FROM projectview WHERE title ilike $1 OR keywords ilike $2 
+	ORDER BY now() < start_date OR end_date < now(), end_date - now() ASC LIMIT $3 OFFSET $4', array("%".$search_field."%", "%".$search_field."%", $results_per_page, $start_from));
 
 ?>
 <html>
