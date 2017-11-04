@@ -131,7 +131,7 @@ if ($search_owner) {
 						</td>
 						<?php if(isset($_SESSION['user']))  {
 							echo '<td>';
-							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date'])) {
+							if (strtotime('tomorrow') >= strtotime($row['start_date']) && strtotime('today') < strtotime($row['end_date']) && $row['owner'] != $_SESSION['user']) {
 									echo '<form action="./add_fund.php" method="post">';
 										echo '<button class="btn btn-success btn-xs btn-block" type="submit" name="submit" value="'.$row['owner'].','.$row['title'].'">Fund</button>';
 									echo '</form>';
@@ -140,6 +140,8 @@ if ($search_owner) {
 									echo 'Project Ended';
 								} else if ($row['start_date'] > $today) {
 									echo 'Future Project';
+								} else if ($row['owner'] == $_SESSION['user']) {
+									echo 'Own Project';
 								}
 							}
 							echo '</td>';
@@ -152,8 +154,8 @@ if ($search_owner) {
 									echo '</form>';
 								echo '</td>';	
 								echo '<td>';
-									echo '<form action="./update_project.php" method="post">';
-										echo '<button class="btn btn-danger btn-xs btn-block" type="submit" name="submit" value="'.$row['title'].'">Delete</button>';
+									echo '<form action="./delete_project.php" method="post">';
+										echo '<button class="btn btn-danger btn-xs btn-block" type="submit" name="submit" onclick="return confirmation('."'".$row['title']."'".')" value="'.$row['owner'].','.$row['title'].'">Delete</button>';
 									echo '</form>';
 								echo '</td>';																
 							}
@@ -208,7 +210,12 @@ if ($search_owner) {
 	</div>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
+	<script>
+		function confirmation(delName){
+			var del=confirm("Are you sure you want to delete "+delName+"?");
+		return del;
+		}
+	</script>
 
 </body>
 
