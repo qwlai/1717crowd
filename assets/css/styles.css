@@ -165,8 +165,7 @@
 
 .login-dark {
   height:100vh;
-  background:#10505f url(../../assets/img/cat.jpg);
-  background-size:cover;
+  background-color: #fff;
   position:relative;
 }
 
