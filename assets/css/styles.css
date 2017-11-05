@@ -39,6 +39,24 @@
   color:inherit;
 }
 
+.header-dark .navbar .input-group {
+  width:320px;
+}
+
+.header-dark .navbar .dropdown-menu label {
+  color:#000;
+  margin-left:20px;
+}
+
+.header-dark .navbar .dropdown-menu {
+  width:350px;
+  height:150px;
+}
+
+.header-dark .navbar .dropdown-menu .form-control {
+  width:180px;
+}
+
 .header-dark .navbar .navbar-brand:hover {
   color:#f0f0f0;
 }
@@ -93,23 +111,6 @@
   background-color:transparent;
 }
 
-.header-dark .navbar .navbar-nav > li > .dropdown-menu {
-  margin-top:-5px;
-  box-shadow:0 4px 8px rgba(0,0,0,.1);
-  background-color:#fff;
-  border-radius:2px;
-}
-
-.header-dark .navbar .dropdown-menu > li > a:focus, .header-dark .navbar .dropdown-menu > li > a {
-  line-height:2;
-  font-size:14px;
-  color:#37434d;
-}
-
-.header-dark .navbar .dropdown-menu > li > a:focus, .header-dark .navbar .dropdown-menu > li > a:hover {
-  background:#ebeff1;
-}
-
 .header-dark .navbar .action-button, .header-dark .navbar .action-button:active {
   background:#208f8f;
   border-radius:20px;
@@ -123,32 +124,6 @@
 
 .header-dark .navbar .action-button:hover {
   background:#269d9d;
-}
-
-.header-dark .navbar .navbar-form label {
-  color:#ccc;
-}
-
-.header-dark .navbar .navbar-form .search-field {
-  background:none;
-  border:none;
-  border-bottom:1px solid transparent;
-  border-radius:0;
-  color:#ccc;
-  box-shadow:none;
-  color:inherit;
-  transition:border-bottom-color 0.3s;
-}
-
-@media (max-width:767px) {
-  .header-dark .navbar .navbar-form .search-field {
-    display:inline-block;
-    width:80%;
-  }
-}
-
-.header-dark .navbar .navbar-form .search-field:focus {
-  border-bottom:1px solid #ccc;
 }
 
 .header-dark .hero {
@@ -177,6 +152,15 @@
 
 .header-dark .hero .embed-responsive iframe {
   background-color:#666;
+}
+
+.box{ 
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  margin-top: 0px;
+  border: 1px solid rgba(0, 0, 0, .2);
 }
 
 .login-dark {
@@ -338,14 +322,4 @@
 .btn-small { 
     width:10px;
     height:10px;
-}
-
-
-.box{ 
-  float: left;
-  width: 20px;
-  height: 20px;
-  margin: 5px;
-  margin-top: 0px;
-  border: 1px solid rgba(0, 0, 0, .2);
 }

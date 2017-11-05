@@ -63,12 +63,9 @@ if ($search_owner) {
 
 <body>
 	<div class="container">
-	<h4>Colours legend:</h4>
-	<div class="box" style="background-color:#e6e6e6"></div><p>Projects already ended</p>
-	<div class="box" style="background-color:#cce6ff"></div><p>Projects that have yet to start</p>
-	</div>
-	
-	<div class="container">
+		<h4>Colours legend:</h4>
+		<div class="box" style="background-color:#e6e6e6"></div><p>Projects already ended</p>
+		<div class="box" style="background-color:#cce6ff"></div><p>Projects that have yet to start</p>
 		<h2>Search Results for <?php echo '"'.$search_field.'"'; ?></h2>
 		<div class="table-responsive">
 			<table class="table" style="width:100%">

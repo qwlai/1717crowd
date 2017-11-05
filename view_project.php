@@ -33,12 +33,10 @@ if(isset($_SESSION['user']))  {
 </head>
 
 <body>
+
 	<div class="container">
 		<h4>Colours legend:</h4>
 		<div class="box" style="background-color:#e6e6e6"></div><p>Projects already ended</p>
-	</div>
-
-	<div class="container">
 		<h2>View Projects Funded</h2>
 		<div class="table-responsive">
 			<table class="table" style="width:100%">

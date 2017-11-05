@@ -25,6 +25,8 @@ $result = pg_query($db, "SELECT SQ.owner, SQ.title, SQ.description, SQ.amount_ra
 
 <body>
 	<div class="container">
+		<h4>Colours legend:</h4>
+		<div class="box" style="background-color:#b1fbb1"></div><p>Projects already ended</p>
 		<h2> Most Successful Projects </h2>
 		<div class="table-responsive">
 			<table class="table " style="width:100%">
